@@ -25,6 +25,12 @@ public class User {
         this.password = NewPassword;
         this.email = NewEmail;
     }
+    public String getName(){
+        return this.name;
+    }
+    public String getPassword(){
+        return this.password;
+    }
     public void ResetPassword(String NewPassword){
         this.password = NewPassword;
     }
