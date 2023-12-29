@@ -32,6 +32,9 @@ public class User {
     public String getPassword(){
         return this.password;
     }
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
     public void ResetPassword(String NewPassword){
         this.password = NewPassword;
     }

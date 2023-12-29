@@ -1,3 +1,3 @@
 public enum UserRole {
-    USER,ADMIN,MEMBER;
+    USER,ADMIN,MEMBER, EDITOR;
 }

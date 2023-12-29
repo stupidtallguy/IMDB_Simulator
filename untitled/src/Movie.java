@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,9 +8,11 @@ class Movie {
     String posterUrl;
     List<Review> reviews;
     List<Genre> genres;
-    List<Person> cast;
+    List<Person> fullcast;
     List<Person> directors;
     List<Person> writers;
+    LocalDate releaseDate;
+    String Trivia;
 
     public Movie(String title, String plotSummary, String posterUrl) {
         this.title = title;
@@ -17,7 +20,7 @@ class Movie {
         this.posterUrl = posterUrl;
         this.reviews = new ArrayList<>();
         this.genres = new ArrayList<>();
-        this.cast = new ArrayList<>();
+        this.fullcast = new ArrayList<>();
         this.directors = new ArrayList<>();
         this.writers = new ArrayList<>();
         // Initialize other attributes and lists if needed
@@ -26,6 +29,12 @@ class Movie {
     // Methods for managing reviews
     public List<Review> getReviews() {
         return reviews;
+    }
+    public String getTitle(){
+        return this.title;
+    }
+    public void SetTitle(String title){
+        this.title = title;
     }
 
     public void addReview(Review review) {
@@ -69,6 +78,18 @@ class Movie {
     public void addWriter(Person writer) {
         writers.add(writer);
         // Additional logic for handling writers
+    }
+
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public void setTrivia(String newTrivia) {
+        this.Trivia = newTrivia;
+    }
+
+    public void setFullCast(List<Person> fullCast) {
+        this.fullcast = fullCast;
     }
 
     // Additional methods for interacting with movies

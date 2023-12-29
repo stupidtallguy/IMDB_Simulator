@@ -8,7 +8,7 @@ public class Friendship {
         this.users = new ArrayList<>();
         this.users.add(user1);
         this.users.add(user2);
-        // Additional logic for initializing friendship
+
     }
 
     // Methods for managing friendships
@@ -24,7 +24,6 @@ public class Friendship {
     public void removeFriend(User friendToRemove) {
         if (users.contains(friendToRemove)) {
             users.remove(friendToRemove);
-            // Additional logic for removing friendship, e.g., update database, send notifications, etc.
             System.out.println(friendToRemove.getName() + " has been removed from your friends.");
         } else {
             System.out.println(friendToRemove.getName() + " is not in your friends list.");
