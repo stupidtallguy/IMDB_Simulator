@@ -6,6 +6,7 @@ public class User {
     private String name;
     private String email;
     private String password;
+    UserRole role;
     List<Notification>  notifications;
     private List<Friendship> friendships;
 
@@ -40,12 +41,9 @@ public class User {
     public List<Notification> getNotifications(){
         return notifications;
     }
-    public void AddFriend(User friend){
-        List<User> friendsList = new ArrayList<>();
-        friendsList.add(this);      // Adding the current user
-        friendsList.add(friend);    // Adding the friend
-
-        Friendship newFriendship = new Friendship(friendsList);
+    public void addFriend(User friend) {
+        Friendship newFriendship = new Friendship(this, friend);
         friendships.add(newFriendship);
     }
+
 }
