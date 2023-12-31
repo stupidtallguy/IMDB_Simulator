@@ -11,6 +11,7 @@ class Movie {
     List<Person> fullcast;
     List<Person> directors;
     List<Person> writers;
+    List<Person> Actors;
     LocalDate releaseDate;
     String Trivia;
 
@@ -23,6 +24,7 @@ class Movie {
         this.fullcast = new ArrayList<>();
         this.directors = new ArrayList<>();
         this.writers = new ArrayList<>();
+        this.Actors = new ArrayList<>();
         // Initialize other attributes and lists if needed
     }
 
@@ -54,11 +56,11 @@ class Movie {
 
     // Methods for managing cast and crew
     public List<Person> getCast() {
-        return cast;
+        return Actors;
     }
 
     public void addActor(Person actor) {
-        cast.add(actor);
+        Actors.add(actor);
         // Additional logic for handling actors
     }
 

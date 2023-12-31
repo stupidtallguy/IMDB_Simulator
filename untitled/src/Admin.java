@@ -1,9 +1,14 @@
 public class Admin extends User{
     IMDbDatabase database;
-    public Admin(String name, String email, String password, IMDbDatabase database) {
-        SetUser(name, email, password);
+    private final String AdminUsername = "admin";
+    private final String AdminPassword = "admin";
+
+
+    public Admin(String email, IMDbDatabase database , int BirthYear) {
+        SetUser(AdminUsername, email, AdminPassword , BirthYear ,UserRole.ADMIN);
         this.database = database;
     }
+
 
 
     public void changePassword(String newPassword) {
@@ -37,7 +42,9 @@ public class Admin extends User{
     public void deletePerson(Person person) {
         database.deletePerson(person);
     }
-
+    public void AddUser(String name, String email, String password, int BirthYear ,UserRole role){
+        SetUser(name , email , password, BirthYear ,role);
+    }
     // Methods for managing users
     public void banUser(User user) {
         database.banUser(user);

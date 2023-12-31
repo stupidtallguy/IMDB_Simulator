@@ -6,8 +6,8 @@ class Member extends User {
     List<Movie> favorites;
     List<Movie> classicsToSee;
 
-    public Member(String name, String email, String password) {
-        SetUser(name, email, password);
+    public Member(String name, String email, String password , int BirthYear, UserRole role) {
+        SetUser(name, email, password ,birthYear,UserRole.MEMBER );
         this.watchlist = new ArrayList<>();
         this.favorites = new ArrayList<>();
         this.classicsToSee = new ArrayList<>();

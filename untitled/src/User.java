@@ -6,23 +6,27 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private boolean isBanned;
     UserRole role;
     List<Notification>  notifications;
     private List<Friendship> friendships;
 
-    int age;
+    int birthYear;
     Gender gender;
 
 
-    public void SetUser(String name, String email, String password){
+    public void SetUser(String name, String email, String password ,int BirthYear, UserRole role){
         this.name = name;
+        this.birthYear = BirthYear;
         this.email = email;
         this.password = password;
         this.notifications = new ArrayList<>();
         this.friendships = new ArrayList<>();
+        setRole(role);
     }
-    public void UpdateProfile(String NewName, String NewPassword, String NewEmail){
+    public void UpdateProfile(String NewName, String NewPassword, String NewEmail, int NewBirthYear){
         this.name = NewName;
+        this.birthYear = NewBirthYear;
         this.password = NewPassword;
         this.email = NewEmail;
     }
@@ -30,9 +34,10 @@ public class User {
         return this.name;
     }
     public String getPassword(){
+
         return this.password;
     }
-    public void setRole(UserRole role) {
+    private void setRole(UserRole role) {
         this.role = role;
     }
     public void ResetPassword(String NewPassword){
@@ -49,4 +54,12 @@ public class User {
         friendships.add(newFriendship);
     }
 
+    public void setBanned(boolean banned) {
+        this.isBanned = banned;
+    }
+
+    // Getter method for the banned status
+    public boolean isBanned() {
+        return isBanned;
+    }
 }

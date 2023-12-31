@@ -41,7 +41,21 @@ class IMDbDatabase {
 
     // Methods for managing users
     public void banUser(User user) {
-        // Implement logic to ban a user
+        if (user != null) {
+            // Check if the user is not already banned
+            if (!user.isBanned()) {
+                // Perform actions to ban the user
+                user.setBanned(true);  // Set the user's banned status to true
+                // Optionally, additional actions like revoking privileges, logging the ban, etc.
+                System.out.println(user.getName() + " has been banned.");
+            } else {
+                // User is already banned
+                System.out.println(user.getName() + " is already banned.");
+            }
+        } else {
+            // Invalid user provided
+            System.out.println("Invalid user.");
+        }
     }
 
     public void deleteUser(User user) {
