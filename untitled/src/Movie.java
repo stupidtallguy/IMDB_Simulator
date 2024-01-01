@@ -2,7 +2,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-class Movie {
+class   Movie {
     String title;
     String plotSummary;
     String posterUrl;

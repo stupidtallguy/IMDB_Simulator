@@ -62,4 +62,9 @@ public class User {
     public boolean isBanned() {
         return isBanned;
     }
+    public void Banned(){
+        if(isBanned){
+            
+        }
+    }
 }

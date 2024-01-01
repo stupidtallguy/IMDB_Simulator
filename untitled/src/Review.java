@@ -1,20 +1,21 @@
+import java.util.Date;
 public class Review {
-    User user;
-    Movie movie;
-    int rating;
-    String text;
+    private Member reviewer;
+    private Movie movie;
+    private int rating; // Rating out of 10 or 5
+    private String text; // Review text
+    private Date timestamp;
 
-    public Review(User user, Movie movie, int rating, String text) {
-        this.user = user;
+    public Review(Member reviewer, Movie movie, int rating, String text) {
+        this.reviewer = reviewer;
         this.movie = movie;
         this.rating = rating;
         this.text = text;
-        // Additional logic for initializing a review
     }
 
     // Methods for managing reviews
-    public User getUser() {
-        return user;
+    public Member getViewer() {
+        return reviewer;
     }
 
     public Movie getMovie() {

@@ -1,14 +1,20 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 class IMDbDatabase {
-    private List<User> users;
+    private List<Member> Members;
+    private HashMap<String,Editor> Editors;
+    private HashMap<String,Admin> Admins;
     private List<Movie> movies;
     private List<Person> people;
 
 
     public IMDbDatabase() {
-        this.users = new ArrayList<>();
+        this.Members = new ArrayList<>();
+        this.Admins = new HashMap<>();
+        this.Editors = new HashMap<>();
         this.movies = new ArrayList<>();
         this.people = new ArrayList<>();
     }
@@ -59,7 +65,11 @@ class IMDbDatabase {
     }
 
     public void deleteUser(User user) {
-        users.remove(user);
+        if (user.role == UserRole.MEMBER){
+            Members.remove(user);
+        } else if (user.role == UserRole.EDITOR) {
+            
+        }
     }
 
     // Methods for handling edit suggestions from editors
