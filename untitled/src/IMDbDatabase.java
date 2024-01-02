@@ -18,7 +18,28 @@ class IMDbDatabase {
         this.movies = new ArrayList<>();
         this.people = new ArrayList<>();
     }
+    public void addMember(Member member){
+        Members.add(member);
+    }
+    public Member getMember(String name,String Pass){
+        for(Member i: Members){
+            if(i.getName().equals(name) && i.getPassword().equals(Pass)){
+                return i;
+            }
+        }
+        return null;
 
+    }
+    public Editor getEditor(String name, String Pass){
+        for(Map.Entry<String, Editor> entry : Editors.entrySet()){
+            String editorName = entry.getKey();
+            String editorpass = entry.getValue().getPassword();
+            if (editorName.equals(name) && editorpass.equals(Pass)){
+                return entry.getValue();
+            }
+        }
+        return null;
+    }
     // Methods for managing movies
     public void addMovie(Movie movie) {
         movies.add(movie);
