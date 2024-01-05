@@ -21,14 +21,13 @@ class IMDbDatabase {
     public void addMember(Member member){
         Members.add(member);
     }
-    public Member getMember(String name,String Pass){
-        for(Member i: Members){
-            if(i.getName().equals(name) && i.getPassword().equals(Pass)){
-                return i;
+    public Member memberSignIn(String name, String password) {
+        for (Member member : Members) {
+            if (member.getName().equals(name) && member.getPassword().equals(password)) {
+                return member; // Return the matched member
             }
         }
-        return null;
-
+        return null; // Return null if no matching member is found
     }
     public Editor getEditor(String name, String Pass){
         for(Map.Entry<String, Editor> entry : Editors.entrySet()){
@@ -99,5 +98,14 @@ class IMDbDatabase {
     // Methods for handling edit suggestions from editors
     public void reviewEditSuggestion(Editor editor, Movie movie, String editDetails) {
         // Implement logic to review and approve/reject edit suggestions
+    }
+
+    public Movie getMovieByTitle(String title) {
+        for (Movie movie : movies) {
+            if (movie.getTitle().equalsIgnoreCase(title)) {
+                return movie; // Return the matched movie
+            }
+        }
+        return null; // Return null if no matching movie is found
     }
 }

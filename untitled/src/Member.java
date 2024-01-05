@@ -52,8 +52,6 @@ class Member extends User {
     public void submitReview(Movie movie, int rating, String text) {
         Review review = new Review(this, movie, rating, text);
         movie.reviews.add(review);
-        // Additional logic for submitting a review
-    }
 
-    // Additional methods for interacting with movies
+    }
 }
