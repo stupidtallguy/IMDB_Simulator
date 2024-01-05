@@ -2,11 +2,12 @@ public class Admin extends User{
     IMDbDatabase database;
     private final String AdminUsername = "admin";
     private final String AdminPassword = "admin";
+    private final String AdminEmail = "Admin123@gmail.com";
+    private final int AdminBirthYear = 2004 ;
 
 
-    public Admin(String email, IMDbDatabase database , int BirthYear) {
-        SetUser(AdminUsername, email, AdminPassword , BirthYear ,UserRole.ADMIN);
-        this.database = database;
+    public Admin() {
+        SetUser(AdminUsername, AdminEmail, AdminPassword , AdminBirthYear ,UserRole.ADMIN);
     }
 
 

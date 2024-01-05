@@ -6,14 +6,14 @@ import java.util.Map;
 class IMDbDatabase {
     private List<Member> Members;
     private HashMap<String,Editor> Editors;
-    private HashMap<String,Admin> Admins;
+    private Admin admin;
     private List<Movie> movies;
     private List<Person> people;
 
 
     public IMDbDatabase() {
         this.Members = new ArrayList<>();
-        this.Admins = new HashMap<>();
+        this.Admins = new ArrayList<>();
         this.Editors = new HashMap<>();
         this.movies = new ArrayList<>();
         this.people = new ArrayList<>();
@@ -29,16 +29,15 @@ class IMDbDatabase {
         }
         return null; // Return null if no matching member is found
     }
-    public Editor getEditor(String name, String Pass){
-        for(Map.Entry<String, Editor> entry : Editors.entrySet()){
-            String editorName = entry.getKey();
-            String editorpass = entry.getValue().getPassword();
-            if (editorName.equals(name) && editorpass.equals(Pass)){
-                return entry.getValue();
-            }
+    public Editor editorSignIn(String name, String password) {
+        Editor editor = Editors.get(name);
+
+        if (editor != null && editor.getPassword().equals(password)) {
+            return editor; // Return the matched editor
         }
-        return null;
+        return null; // Return null if no matching editor or incorrect password is found
     }
+
     // Methods for managing movies
     public void addMovie(Movie movie) {
         movies.add(movie);
@@ -74,7 +73,7 @@ class IMDbDatabase {
             // Check if the user is not already banned
             if (!user.isBanned()) {
                 // Perform actions to ban the user
-                user.setBanned(true);  // Set the user's banned status to true
+                user.setBanned(user);  // Set the user's banned status to true
                 // Optionally, additional actions like revoking privileges, logging the ban, etc.
                 System.out.println(user.getName() + " has been banned.");
             } else {
@@ -86,13 +85,16 @@ class IMDbDatabase {
             System.out.println("Invalid user.");
         }
     }
-
-    public void deleteUser(User user) {
-        if (user.role == UserRole.MEMBER){
-            Members.remove(user);
-        } else if (user.role == UserRole.EDITOR) {
-            
+    public Person getPersonByName(String Name){
+        for(Person Person : people){
+            if(Person.name.equalsIgnoreCase(Name)){
+                return Person;
+            }
         }
+        return null;
+    }
+    public void deleteUser(User user) {
+        Members.remove(user);
     }
 
     // Methods for handling edit suggestions from editors
@@ -107,5 +109,14 @@ class IMDbDatabase {
             }
         }
         return null; // Return null if no matching movie is found
+    }
+
+    public User getUserByName(String userToBan) {
+        for(Member member: Members){
+            if(member.getName().equals(userToBan)){
+                return member;
+            }
+        }
+        return null;
     }
 }

@@ -6,7 +6,7 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private boolean isBanned;
+    private boolean isBanned = false;
     UserRole role;
     List<Notification>  notifications;
     private List<Friendship> friendships;
@@ -53,17 +53,13 @@ public class User {
         friendships.add(newFriendship);
     }
 
-    public void setBanned(boolean banned) {
-        this.isBanned = banned;
+    public void setBanned(User user) {
+        this.isBanned = true;
     }
 
     // Getter method for the banned status
     public boolean isBanned() {
         return isBanned;
     }
-    public void Banned(){
-        if(isBanned){
-            
-        }
-    }
+
 }

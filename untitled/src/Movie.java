@@ -25,7 +25,7 @@ class   Movie {
         this.directors = new ArrayList<>();
         this.writers = new ArrayList<>();
         this.Actors = new ArrayList<>();
-        // Initialize other attributes and lists if needed
+
     }
 
     // Methods for managing reviews
@@ -75,6 +75,13 @@ class   Movie {
 
     public void addWriter(Person writer) {
         writers.add(writer);
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public void setPlotSummary(String PlotSummery){
+        this.plotSummary = plotSummary;
     }
 
     public void setReleaseDate(LocalDate releaseDate) {

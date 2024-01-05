@@ -21,7 +21,15 @@ public class Person {
     public void addRole(Role role) {
         roles.add(role);
     }
-
+    public void setName(String name){
+        this.name = name;
+    }
+    public void setBio(String Bio){
+        this.bio = Bio;
+    }
+    public void setLocation(GeoLoc Location){
+        this.Location = Location;
+    }
     public void removeRole(Role role) {
         roles.remove(role);
     }

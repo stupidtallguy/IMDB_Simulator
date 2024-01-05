@@ -6,7 +6,7 @@ public class Main {
         IMDbDatabase imdbDatabase = new IMDbDatabase();
 
         System.out.println("Hi!\nWelcome to IMDB");
-        while(true) {
+        while (true) {
             System.out.println("Please Choose the Type of User that You are:\n1)Member<>\n2)Editor<>\n3)Admin<>");
             int UserType = input.nextInt();
             switch (UserType) {
@@ -19,7 +19,6 @@ public class Main {
                         String nameToSignIn = input.next();
                         String passwordToSignIn = input.next();
 
-                        // Assuming you have a method to check member sign-in in your IMDbDatabase
                         Member signedInMember = imdbDatabase.memberSignIn(nameToSignIn, passwordToSignIn);
 
                         if (signedInMember != null) {
@@ -41,8 +40,27 @@ public class Main {
                         handleMemberActions(NewMember, imdbDatabase, input);
                     }
                 case 2:
+                    System.out.println("Enter your name and password to sign in as an Editor:");
+                    String editorName = input.next();
+                    String editorPassword = input.next();
+
+                    Editor signedInEditor = imdbDatabase.editorSignIn(editorName, editorPassword);
+
+                    if (signedInEditor != null) {
+                        System.out.println("Sign in successful. Welcome, " + signedInEditor.getName() + " (Editor)!");
+                        handleEditorActions(signedInEditor, imdbDatabase, input);
+                    } else {
+                        System.out.println("Sign in failed. Invalid credentials.");
+                    }
                     break;
                 case 3:
+                    System.out.println("Please Enter User and Password:");
+                    String username = input.next();
+                    String Pass = input.next();
+                    if (username.equals("Admin") && Pass.equals("Admin")){
+                        Admin admin = imdbDatabase.setAdmin();
+                        handleAdminActions(admin);
+                    }
                     break;
             }
         }
@@ -51,8 +69,8 @@ public class Main {
     private static void handleMemberActions(Member member, IMDbDatabase imdbDatabase, Scanner input) {
         while (true) {
             List<Movie> Movies = imdbDatabase.getMovies();
-            for(int i=0;i<Movies.size();i++){
-                System.out.print(i +"_"+ Movies.get(i).getTitle() + " ");
+            for (int i = 0; i < Movies.size(); i++) {
+                System.out.print(i + "_" + Movies.get(i).getTitle() + " ");
             }
             System.out.println("1)Rate a movie\n2)Add to Watchlist\n3)Add to Favorites\n4)Add to Classics to See\n5)View Lists\n6)Edit information\n7)Change Password\n8)Exit");
             int memberAction = input.nextInt();
@@ -118,26 +136,269 @@ public class Main {
                     String NewName = input.next();
                     String NewEmail = input.next();
                     int NewBirthYear = input.nextInt();
-                    member.UpdateProfile(NewName,NewEmail,NewBirthYear);
+                    member.UpdateProfile(NewName, NewEmail, NewBirthYear);
                     break;
                 case 7:
-                    while(true) {
+                    while (true) {
                         System.out.println("Please Enter Your Current Password:");
-                        String CurrentPass = input.next();
-                        if (member.getPassword().equals(CurrentPass)) {
+                        String currentPass = input.next();
+
+                        if (member.getPassword().equals(currentPass)) {
                             System.out.println("Please Enter Your New Password:");
-                            String NewPass = input.next();
-                            member.ResetPassword(NewPass);
-                            System.out.println("Your Password Updated Successfully!");
-                            break;
+                            String newPass = input.next();
 
+                            // Password confirmation
+                            System.out.println("Please Confirm Your New Password:");
+                            String confirmPass = input.next();
+
+                            if (newPass.equals(confirmPass)) {
+                                // Password validation (add more conditions as needed)
+                                if (newPass.length() >= 8) {
+                                    member.ResetPassword(newPass);
+                                    System.out.println("Your Password Updated Successfully!");
+                                    break;
+                                } else {
+                                    System.out.println("Password must be at least 8 characters long. Please try again.");
+                                }
+                            } else {
+                                System.out.println("Passwords do not match. Please try again.");
+                            }
                         } else {
-                            System.out.println("Please Enter your Current Password Right!");
-
+                            System.out.println("Please Enter Your Current Password Correctly!");
                         }
                     }
                     break;
+
                 case 8:
+                    System.out.println("Goodbye!");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid input. Please try again.");
+            }
+        }
+    }
+
+    private static void handleAdminActions(Admin admin, IMDbDatabase imdbDatabase, Scanner input) {
+        while (true) {
+            System.out.println("1)Add/Edit/Delete Movie \n2)Add/Edit/Delete Person \n3)Add/Edit/Delete User \n" +
+                    "4)Add/Edit/Delete Review\n5)Review and Approve/Reject Edits\n" +
+                    "6)Set Configuration Options\n7)Add/Edit/Delete User\n8)Exit");
+            int editorAction = input.nextInt();
+
+            switch (editorAction) {
+                case 1:
+                    while (true) {
+                        System.out.println("1) Add Movie\n2) Edit Movie\n3) Delete Movie\n4) Exit");
+                        int movieAction = input.nextInt();
+
+                        switch (movieAction) {
+                            case 1:
+                                // Add Movie
+                                System.out.println("Enter movie details:");
+                                System.out.print("Title: ");
+                                String title = input.next();
+                                System.out.print("Plot Summary: ");
+                                String plotSummary = input.next();
+                                System.out.print("Poster URL: ");
+                                String PosterUrl = input.next();
+                                Movie newMovie = new Movie(title, plotSummary, PosterUrl);
+                                imdbDatabase.addMovie(newMovie);
+                                System.out.println("Movie added successfully!");
+                                break;
+                            case 2:
+                                // Edit Movie
+                                System.out.println("Enter the title of the movie to edit:");
+                                String editTitle = input.next();
+                                Movie movieToEdit = imdbDatabase.getMovieByTitle(editTitle);
+
+                                if (movieToEdit != null) {
+                                    // Allow editing of movie details
+                                    System.out.println("Enter new details for the movie:");
+                                    System.out.print("New Title: ");
+                                    movieToEdit.setTitle(input.next());
+                                    System.out.print("New Plot Summary: ");
+                                    movieToEdit.setPlotSummary(input.next());
+
+                                    System.out.println("Movie edited successfully!");
+                                } else {
+                                    System.out.println("Movie not found.");
+                                }
+                                break;
+                            case 3:
+                                // Delete Movie
+                                System.out.println("Enter the title of the movie to delete:");
+                                String deleteTitle = input.next();
+                                Movie movieToDelete = imdbDatabase.getMovieByTitle(deleteTitle);
+
+                                if (movieToDelete != null) {
+                                    imdbDatabase.deleteMovie(movieToDelete);
+                                    System.out.println("Movie deleted successfully!");
+                                } else {
+                                    System.out.println("Movie not found.");
+                                }
+                                break;
+                            case 4:
+                                System.out.println("Exiting movie actions.");
+                                return;
+                            default:
+                                System.out.println("Invalid input. Please try again.");
+                        }
+                        break;
+                    }
+
+                case 2:
+                    while (true) {
+                        System.out.println("1) Add Person\n2) Edit Person\n3) Delete Person\n4) Exit");
+                        int personAction = input.nextInt();
+
+                        switch (personAction) {
+                            case 1:
+                                // Add Person
+                                System.out.println("Enter person details:");
+                                System.out.print("Name: ");
+                                String name = input.next();
+                                System.out.print("Bio: ");
+                                String bio = input.next();
+                                Person newPerson = new Person(name, bio);
+                                imdbDatabase.addPerson(newPerson);
+                                System.out.println("Person added successfully!");
+                                break;
+                            case 2:
+                                // Edit Person
+                                System.out.println("Enter the name of the person to edit:");
+                                String editName = input.next();
+                                Person personToEdit = imdbDatabase.getPersonByName(editName);
+
+                                if (personToEdit != null) {
+                                    // Allow editing of person details
+                                    System.out.println("Enter new details for the person:");
+                                    System.out.print("New Name: ");
+                                    personToEdit.setName(input.next());
+                                    System.out.print("New Bio: ");
+                                    personToEdit.setBio(input.next());
+                                    System.out.println("Person edited successfully!");
+                                } else {
+                                    System.out.println("Person not found.");
+                                }
+                                break;
+                            case 3:
+                                // Delete Person
+                                System.out.println("Enter the name of the person to delete:");
+                                String deleteName = input.next();
+                                Person personToDelete = imdbDatabase.getPersonByName(deleteName);
+
+                                if (personToDelete != null) {
+                                    imdbDatabase.deletePerson(personToDelete);
+                                    System.out.println("Person deleted successfully!");
+                                } else {
+                                    System.out.println("Person not found.");
+                                }
+                                break;
+                            case 4:
+                                System.out.println("Exiting person actions.");
+                                return;
+                            default:
+                                System.out.println("Invalid input. Please try again.");
+                        }
+                        break;
+                    }
+
+                case 3:
+                    System.out.println("1)Ban User\n2)Delete User\n3)Exit");
+                    int userManagementAction = input.nextInt();
+
+                    switch (userManagementAction) {
+                        case 1:
+                            System.out.println("Enter the name of the user to ban:");
+                            String userToBan = input.next();
+                            User user = imdbDatabase.getUserByName(userToBan);
+
+                            if (user != null) {
+                                admin.setBanned(user);
+                                String newPass = input.next();
+                                user.ResetPassword(newPass);
+                                System.out.println("User banned successfully!");
+                            } else {
+                                System.out.println("User not found.");
+                            }
+                            break;
+                        case 2:
+                            System.out.println("Enter the name of the user to Delete:");
+                            String userToDelete = input.next();
+                            User User = imdbDatabase.getUserByName(userToDelete);
+
+                            if (User != null) {
+                                admin.setBanned(User);
+                                imdbDatabase.deleteUser(User);
+                                System.out.println("User Deleted successfully!");
+                            } else {
+                                System.out.println("User not found.");
+                            }
+                            break;
+                        case 3:
+                            break;
+                        default:
+                            System.out.println("Invalid input. Please try again.");
+                    }
+                    break;
+                case 5:
+                    while (true) {
+                        System.out.println("1) Review and Approve/Reject Edits\n2) Exit");
+                        int reviewAction = input.nextInt();
+
+                        switch (reviewAction) {
+                            case 1:
+                                // Review and Approve/Reject Edits
+                                System.out.println("Enter the title of the movie for which edits are suggested:");
+                                String movieTitle = input.next();
+                                Movie movieToReview = imdbDatabase.getMovieByTitle(movieTitle);
+
+                                if (movieToReview != null) {
+                                    // Display edit suggestions and prompt for approval/rejection
+                                    List<EditSuggestion> editSuggestions = movieToReview.getEditSuggestions();
+
+                                    if (!editSuggestions.isEmpty()) {
+                                        System.out.println("Edit Suggestions for " + movieTitle + ":");
+                                        for (EditSuggestion suggestion : editSuggestions) {
+                                            System.out.println(suggestion);
+                                        }
+
+                                        System.out.println("Do you want to approve or reject these edits?");
+                                        System.out.println("1) Approve\n2) Reject");
+                                        int approvalDecision = input.nextInt();
+
+                                        if (approvalDecision == 1) {
+                                            // Approve edits
+                                            movieToReview.applyEdits();
+                                            System.out.println("Edits approved and applied successfully!");
+                                        } else if (approvalDecision == 2) {
+                                            // Reject edits
+                                            movieToReview.clearEditSuggestions();
+                                            System.out.println("Edits rejected successfully!");
+                                        } else {
+                                            System.out.println("Invalid input. Please try again.");
+                                        }
+                                    } else {
+                                        System.out.println("No edit suggestions found for " + movieTitle);
+                                    }
+                                } else {
+                                    System.out.println("Movie not found.");
+                                }
+                                break;
+                            case 2:
+                                System.out.println("Exiting review actions.");
+                                return;
+                            default:
+                                System.out.println("Invalid input. Please try again.");
+                        }
+                        break;
+                    }
+
+                case 6:
+                    // Implement logic for setting configuration options
+                    break;
+                case 7:
                     System.out.println("Goodbye!");
                     System.exit(0);
                     break;
