@@ -24,10 +24,9 @@ public class User {
         this.friendships = new ArrayList<>();
         setRole(role);
     }
-    public void UpdateProfile(String NewName, String NewPassword, String NewEmail, int NewBirthYear){
+    public void UpdateProfile(String NewName, String NewEmail, int NewBirthYear){
         this.name = NewName;
         this.birthYear = NewBirthYear;
-        this.password = NewPassword;
         this.email = NewEmail;
     }
     public String getName(){

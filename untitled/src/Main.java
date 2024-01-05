@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
@@ -5,7 +6,7 @@ public class Main {
         IMDbDatabase imdbDatabase = new IMDbDatabase();
 
         System.out.println("Hi!\nWelcome to IMDB");
-        while (true) {
+        while(true) {
             System.out.println("Please Choose the Type of User that You are:\n1)Member<>\n2)Editor<>\n3)Admin<>");
             int UserType = input.nextInt();
             switch (UserType) {
@@ -30,15 +31,18 @@ public class Main {
                     } else if (memberOption == 2) {
                         System.out.println("Please Enter you information(In such order):");
                         System.out.println("Your Name,\nEmail,\nPassWord,\nYour birth year.");
-                        String Name = input.nextLine();
-                        String Email = input.nextLine();
-                        String Pass = input.nextLine();
+                        String Name = input.next();
+                        String Email = input.next();
+                        String Pass = input.next();
                         int BirthYear = input.nextInt();
                         Member NewMember = new Member(Name, Email, Pass, BirthYear);
                         imdbDatabase.addMember(NewMember);
+                        System.out.println("Sign Up successful. Welcome, " + NewMember.getName() + "!");
                         handleMemberActions(NewMember, imdbDatabase, input);
                     }
                 case 2:
+                    break;
+                case 3:
                     break;
             }
         }
@@ -46,7 +50,11 @@ public class Main {
 
     private static void handleMemberActions(Member member, IMDbDatabase imdbDatabase, Scanner input) {
         while (true) {
-            System.out.println("1)Rate a movie\n2)Add to Watchlist\n3)Add to Favorites\n4)Add to Classics to See\n5)View Lists\n6)Exit");
+            List<Movie> Movies = imdbDatabase.getMovies();
+            for(int i=0;i<Movies.size();i++){
+                System.out.print(i +"_"+ Movies.get(i).getTitle() + " ");
+            }
+            System.out.println("1)Rate a movie\n2)Add to Watchlist\n3)Add to Favorites\n4)Add to Classics to See\n5)View Lists\n6)Edit information\n7)Change Password\n8)Exit");
             int memberAction = input.nextInt();
 
             switch (memberAction) {
@@ -105,6 +113,31 @@ public class Main {
                     System.out.println("Classics to See: " + member.getClassicsToSee());
                     break;
                 case 6:
+                    System.out.println("Please Enter Your New information(In such order):");
+                    System.out.println("Your New Name,\nNew Email,\nNew birth year.");
+                    String NewName = input.next();
+                    String NewEmail = input.next();
+                    int NewBirthYear = input.nextInt();
+                    member.UpdateProfile(NewName,NewEmail,NewBirthYear);
+                    break;
+                case 7:
+                    while(true) {
+                        System.out.println("Please Enter Your Current Password:");
+                        String CurrentPass = input.next();
+                        if (member.getPassword().equals(CurrentPass)) {
+                            System.out.println("Please Enter Your New Password:");
+                            String NewPass = input.next();
+                            member.ResetPassword(NewPass);
+                            System.out.println("Your Password Updated Successfully!");
+                            break;
+
+                        } else {
+                            System.out.println("Please Enter your Current Password Right!");
+
+                        }
+                    }
+                    break;
+                case 8:
                     System.out.println("Goodbye!");
                     System.exit(0);
                     break;

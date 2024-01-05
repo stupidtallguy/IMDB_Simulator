@@ -41,7 +41,6 @@ class   Movie {
 
     public void addReview(Review review) {
         reviews.add(review);
-        // Additional logic for handling reviews
     }
 
     // Methods for managing genres
@@ -51,7 +50,6 @@ class   Movie {
 
     public void addGenre(Genre genre) {
         genres.add(genre);
-        // Additional logic for handling genres
     }
 
     // Methods for managing cast and crew
@@ -61,7 +59,6 @@ class   Movie {
 
     public void addActor(Person actor) {
         Actors.add(actor);
-        // Additional logic for handling actors
     }
 
     public List<Person> getDirectors() {
@@ -70,7 +67,6 @@ class   Movie {
 
     public void addDirector(Person director) {
         directors.add(director);
-        // Additional logic for handling directors
     }
 
     public List<Person> getWriters() {
@@ -79,7 +75,6 @@ class   Movie {
 
     public void addWriter(Person writer) {
         writers.add(writer);
-        // Additional logic for handling writers
     }
 
     public void setReleaseDate(LocalDate releaseDate) {
@@ -93,6 +88,4 @@ class   Movie {
     public void setFullCast(List<Person> fullCast) {
         this.fullcast = fullCast;
     }
-
-    // Additional methods for interacting with movies
 }
