@@ -15,7 +15,7 @@ class Member extends User {
     }
 
     public void rateMovie(Movie movie, int rating) {
-        Review review = new Review(this, movie, rating, "");
+        Review review = new Review(this, movie, rating, "" );
         movie.reviews.add(review);
         // Additional logic for rating a movie
     }

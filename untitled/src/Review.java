@@ -1,4 +1,6 @@
 import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 public class Review {
     private Member reviewer;
     private Movie movie;
@@ -8,16 +10,18 @@ public class Review {
     private int helpfulVotes; // Number of helpful votes
     private int notHelpfulVotes; // Number of not helpful votes
     private Date timestamp;
+    private List<String> replies;
 
-    public Review(Member reviewer, Movie movie, int rating, String text, boolean spoiler) {
+    public Review(Member reviewer, Movie movie, int rating, String text) {
         this.reviewer = reviewer;
         this.movie = movie;
         this.rating = rating;
         this.text = text;
-        this.spoiler = spoiler;
+        this.spoiler = false;
         this.helpfulVotes = 0;
         this.notHelpfulVotes = 0;
         this.timestamp = new Date(); // Set the current date and time
+        this.replies = new ArrayList<>();
     }
     // Getter methods
 
@@ -56,6 +60,13 @@ public class Review {
 
     public void markAsSpoiler() {
         spoiler = true;
+    }
+    public void addReply(String reply){
+        replies.add(reply);
+    }
+
+    public List<String> getReplies() {
+        return replies;
     }
 
     public void markReviewAsHelpful() {

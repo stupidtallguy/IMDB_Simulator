@@ -14,25 +14,25 @@ public class Main {
                     int EnterOption2 = input.nextInt();
                     if (EnterOption2 == 1) {
                     } else if (EnterOption2 == 2) {
-                        System.out.println("Please Enter you information:");
-                        System.out.println("Please Enter Your name");
+                        System.out.println("Please Enter you information(In such order):");
+                        System.out.println("Your Name,\nEmail,\nPassWord,\nYour birth year.");
                         String Name = input.nextLine();
-                        System.out.println("Please Enter Your Email");
                         String Email = input.nextLine();
-                        System.out.println("Please Set a Password that you don't forget");
                         String Pass = input.nextLine();
-                        System.out.println("Please Enter Your Birth year");
                         int BirthYear = input.nextInt();
                         Member NewMember = new Member(Name, Email, Pass, BirthYear);
                         imdbDatabase.addMember(NewMember);
                         while (true) {
-                            System.out.println("Choose or die\n1)");
+                            System.out.println("List of movies:");
+                            imdbDatabase.getMovies().forEach(System.out::println);
+
                         }
                     } else {
                         System.out.println("Invalid Input Try this Shit Again!");
                         break;
                     }
-
+                case 2:
+                    break;
             }
         }
     }

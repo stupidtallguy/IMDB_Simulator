@@ -44,6 +44,9 @@ class IMDbDatabase {
     public void addMovie(Movie movie) {
         movies.add(movie);
     }
+    public List<Movie> getMovies(){
+        return movies;
+    }
 
     public void editMovie(Movie movie) {
         // Implement logic to edit an existing movie
