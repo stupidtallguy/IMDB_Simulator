@@ -34,7 +34,20 @@ public class Main {
                         String Email = input.next();
                         String Pass = input.next();
                         int BirthYear = input.nextInt();
-                        Member NewMember = new Member(Name, Email, Pass, BirthYear);
+                        System.out.println("Please Choose a gender: \n1)MALE 2)FEMALE 3)OTHER(BullShit)");
+                        Gender userGender;
+                        int GenderOption = input.nextInt();
+                        if(GenderOption == 1){
+                            userGender = Gender.MALE;
+                        }else if(GenderOption == 2){
+                            userGender = Gender.FEMALE;
+                        }else if(GenderOption == 3){
+                            userGender = Gender.OTHER;
+                        }else{
+                            System.out.println("Invalid input");
+                            break;
+                        }
+                        Member NewMember = new Member(Name, Email, Pass, BirthYear,userGender);
                         imdbDatabase.addMember(NewMember);
                         System.out.println("Sign Up successful. Welcome, " + NewMember.getName() + "!");
                         handleMemberActions(NewMember, imdbDatabase, input);
@@ -58,8 +71,8 @@ public class Main {
                     String username = input.next();
                     String Pass = input.next();
                     if (username.equals("Admin") && Pass.equals("Admin")){
-                        Admin admin = imdbDatabase.setAdmin();
-                        handleAdminActions(admin);
+                        Admin admin = imdbDatabase.getAdmin();
+                        handleAdminActions(admin,imdbDatabase,input);
                     }
                     break;
             }
@@ -183,7 +196,7 @@ public class Main {
         while (true) {
             System.out.println("1)Add/Edit/Delete Movie \n2)Add/Edit/Delete Person \n3)Add/Edit/Delete User \n" +
                     "4)Add/Edit/Delete Review\n5)Review and Approve/Reject Edits\n" +
-                    "6)Set Configuration Options\n7)Add/Edit/Delete User\n8)Exit");
+                    "6)Add/Edit/Delete User\n7)Exit");
             int editorAction = input.nextInt();
 
             switch (editorAction) {
@@ -356,11 +369,11 @@ public class Main {
 
                                 if (movieToReview != null) {
                                     // Display edit suggestions and prompt for approval/rejection
-                                    List<EditSuggestion> editSuggestions = movieToReview.getEditSuggestions();
+                                    List<EditSuggestionEntry> editSuggestions = movieToReview.getEditSuggestions();
 
                                     if (!editSuggestions.isEmpty()) {
                                         System.out.println("Edit Suggestions for " + movieTitle + ":");
-                                        for (EditSuggestion suggestion : editSuggestions) {
+                                        for (EditSuggestionEntry suggestion : editSuggestions) {
                                             System.out.println(suggestion);
                                         }
 
@@ -396,9 +409,117 @@ public class Main {
                     }
 
                 case 6:
-                    // Implement logic for setting configuration options
-                    break;
+                    while (true) {
+                        System.out.println("1) Add User\n2) Edit User\n3) Delete User\n4) Exit");
+                        int userAction = input.nextInt();
+
+                        switch (userAction) {
+                            case 1:
+                                // Add User
+                                System.out.println("Enter user details:");
+                                System.out.print("Name: ");
+                                String name = input.next();
+                                System.out.print("Email: ");
+                                String email = input.next();
+                                System.out.print("Password: ");
+                                String password = input.next();
+                                System.out.println("What Role You want to give him\\her: \n1)Editor 2)Member");
+                                int roleOption = input.nextInt();
+                                UserRole userRole;
+                                if(roleOption == 1){
+                                    userRole = UserRole.EDITOR;
+                                }
+                                else if(roleOption == 2){
+                                    userRole = UserRole.MEMBER;
+                                }
+                                else {
+                                    System.out.println("invalid input");
+                                    break;
+                                }
+                                System.out.println("Please Choose a gender: \n1)MALE 2)FEMALE 3)OTHER(BullShit)");
+                                Gender userGender;
+                                int genderOption = input.nextInt();
+                                if(genderOption == 1){
+                                    userGender = Gender.MALE;
+                                }else if(genderOption == 2){
+                                    userGender = Gender.FEMALE;
+                                }else if(genderOption == 3){
+                                    userGender = Gender.OTHER;
+                                }else{
+                                    System.out.println("Invalid input");
+                                    break;
+                                }
+                                System.out.println("Please Enter Users Birth Year and I'm Done after that:");
+                                int userBirth = input.nextInt();
+
+                                User newUser = new User(name, email, password,userBirth,userGender,userRole);
+                                imdbDatabase.addUser(newUser);
+                                System.out.println("User added successfully!");
+                                break;
+                            case 2:
+                                // Edit User
+                                System.out.println("Enter the name of the user to edit:");
+                                String editUserName = input.next();
+                                User userToEdit = imdbDatabase.getUserByName(editUserName);
+
+                                if (userToEdit != null) {
+                                    // Allow editing of user details
+                                    System.out.println("Enter new details for the user:");
+                                    System.out.print("New Name: ");
+                                    userToEdit.setName(input.next());
+                                    System.out.print("New Email: ");
+                                    userToEdit.setEmail(input.next());
+                                    System.out.print("New Password: ");
+                                    userToEdit.setPassword(input.next());
+
+                                    System.out.println("User edited successfully!");
+                                } else {
+                                    System.out.println("User not found.");
+                                }
+                                break;
+                            case 3:
+                                // Delete User
+                                System.out.println("Enter the name of the user to delete:");
+                                String deleteUserName = input.next();
+                                User userToDelete = imdbDatabase.getUserByName(deleteUserName);
+
+                                if (userToDelete != null) {
+                                    imdbDatabase.deleteUser(userToDelete);
+                                    System.out.println("User deleted successfully!");
+                                } else {
+                                    System.out.println("User not found.");
+                                }
+                                break;
+                            case 4:
+                                System.out.println("Exiting user actions.");
+                                return;
+                            default:
+                                System.out.println("Invalid input. Please try again.");
+                        }
+                        break;
+                    }
                 case 7:
+                    System.out.println("Goodbye!");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid input. Please try again.");
+            }
+        }
+    }
+    private static void handleEditorActions(Editor editor, IMDbDatabase imdbDatabase, Scanner input) {
+        while (true) {
+            System.out.println("1) Suggest Edits\n2) Flag Inappropriate Content\n3) Exit");
+            int editorAction = input.nextInt();
+
+            switch (editorAction) {
+                case 1:
+                    // Implement logic for suggesting edits
+                    break;
+                case 2:
+                    // Implement logic for flagging inappropriate content
+                    break;
+                case 3:
                     System.out.println("Goodbye!");
                     System.exit(0);
                     break;

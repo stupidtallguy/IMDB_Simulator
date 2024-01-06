@@ -5,8 +5,8 @@ import java.util.List;
 public class Editor extends User {
     private List<Movie> suggestedEdits;
 
-    public Editor(String name, String email, String password ,int BirthYear) {
-        SetUser(name, email, password,BirthYear, UserRole.EDITOR);
+    public Editor(String name, String email, String password ,int BirthYear, Gender gender) {
+        SetUser(name, email, password,BirthYear, gender,UserRole.EDITOR);
         this.suggestedEdits = new ArrayList<>();
     }
 

@@ -6,10 +6,9 @@ public class Admin extends User{
     private final int AdminBirthYear = 2004 ;
 
 
-    public Admin() {
-        SetUser(AdminUsername, AdminEmail, AdminPassword , AdminBirthYear ,UserRole.ADMIN);
+    public Admin(String name, String email, String password, int BirthYear, Gender gender, UserRole role) {
+        super(name, email, password, BirthYear, gender, role);
     }
-
 
 
     public void changePassword(String newPassword) {
@@ -43,8 +42,8 @@ public class Admin extends User{
     public void deletePerson(Person person) {
         database.deletePerson(person);
     }
-    public void AddUser(String name, String email, String password, int BirthYear ,UserRole role){
-        SetUser(name , email , password, BirthYear ,role);
+    public void AddUser(String name, String email, String password, int BirthYear,Gender gender ,UserRole role){
+        SetUser(name , email , password, BirthYear,gender,role);
     }
     // Methods for managing users
     public void banUser(User user) {

@@ -3,9 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 class   Movie {
-    String title;
-    String plotSummary;
-    String posterUrl;
+    private String title;
+    private String plotSummary;
+    private String posterUrl;
     List<Review> reviews;
     List<Genre> genres;
     List<Person> fullcast;
@@ -13,7 +13,8 @@ class   Movie {
     List<Person> writers;
     List<Person> Actors;
     LocalDate releaseDate;
-    String Trivia;
+    List<String> Trivia;
+    private List<EditSuggestionEntry> editSuggestions;
 
     public Movie(String title, String plotSummary, String posterUrl) {
         this.title = title;
@@ -25,6 +26,7 @@ class   Movie {
         this.directors = new ArrayList<>();
         this.writers = new ArrayList<>();
         this.Actors = new ArrayList<>();
+        this.editSuggestions = new ArrayList<>();
 
     }
 
@@ -73,6 +75,9 @@ class   Movie {
         return writers;
     }
 
+    public List<EditSuggestionEntry> getEditSuggestions() {
+        return editSuggestions;
+    }
     public void addWriter(Person writer) {
         writers.add(writer);
     }
@@ -89,10 +94,75 @@ class   Movie {
     }
 
     public void setTrivia(String newTrivia) {
-        this.Trivia = newTrivia;
+        this.Trivia.add(newTrivia);
     }
 
     public void setFullCast(List<Person> fullCast) {
         this.fullcast = fullCast;
+    }
+    public void applyEdits(List<EditSuggestionEntry> approvedSuggestions) {
+        for (EditSuggestionEntry suggestion : approvedSuggestions) {
+            Editor editor = suggestion.getEditor();
+            String editDetails = suggestion.getSuggestionDetails();
+
+            if (containsNewPlotSummary(editDetails)) {
+                updatePlotSummary(editDetails);
+            }
+
+            if (containsTrivia(editDetails)) {
+                addTrivia(editDetails);
+            }
+
+
+
+            if (containsReleaseDate(editDetails)) {
+                updateReleaseDate(editDetails);
+            }
+
+
+        }
+
+        // Clear the edit suggestions after applying edits
+        clearEditSuggestions();
+    }
+
+    private void addTrivia(String editDetails) {
+        this.Trivia.add(editDetails);
+    }
+
+
+    private boolean containsTrivia(String editDetails) {
+        return this.Trivia.contains(editDetails);
+    }
+
+
+    private void updatePlotSummary(String editDetails) {
+        this.plotSummary = editDetails;
+    }
+
+
+    private boolean containsNewPlotSummary(String editDetails) {
+        return this.plotSummary.equals(editDetails);
+    }
+    
+
+    private boolean containsReleaseDate(String editDetails) {
+        // Example: Placeholder method to check if the edit details contain release date information
+        return editDetails.contains("Release Date:");
+    }
+
+    private void updateReleaseDate(String editDetails) {
+
+        String releaseDateMarker = "Release Date:";
+        int markerIndex = editDetails.indexOf(releaseDateMarker);
+        if (markerIndex != -1) {
+
+            String newReleaseDate = editDetails.substring(markerIndex + releaseDateMarker.length()).trim();
+            this.releaseDate = LocalDate.parse(newReleaseDate);
+        }
+    }
+
+    public void clearEditSuggestions() {
+        editSuggestions.clear();
     }
 }

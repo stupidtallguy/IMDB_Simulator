@@ -13,13 +13,20 @@ class IMDbDatabase {
 
     public IMDbDatabase() {
         this.Members = new ArrayList<>();
-        this.Admins = new ArrayList<>();
         this.Editors = new HashMap<>();
         this.movies = new ArrayList<>();
         this.people = new ArrayList<>();
     }
     public void addMember(Member member){
         Members.add(member);
+    }
+    public void addUser(User newUser){
+        if(newUser.role == UserRole.MEMBER ){
+            addMember((Member)(newUser));
+        }
+        if(newUser.role == UserRole.EDITOR){
+            Editors.put(newUser.getName(),(Editor)newUser);
+        }
     }
     public Member memberSignIn(String name, String password) {
         for (Member member : Members) {
@@ -36,6 +43,10 @@ class IMDbDatabase {
             return editor; // Return the matched editor
         }
         return null; // Return null if no matching editor or incorrect password is found
+    }
+
+    public Admin getAdmin() {
+        return admin;
     }
 
     // Methods for managing movies

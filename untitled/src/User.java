@@ -14,8 +14,7 @@ public class User {
     int birthYear;
     Gender gender;
 
-
-    public void SetUser(String name, String email, String password ,int BirthYear, UserRole role){
+    public User(String name, String email, String password ,int BirthYear,Gender gender, UserRole role){
         this.name = name;
         this.birthYear = BirthYear;
         this.email = email;
@@ -23,6 +22,17 @@ public class User {
         this.notifications = new ArrayList<>();
         this.friendships = new ArrayList<>();
         setRole(role);
+        setGender(gender);
+    }
+    public void SetUser(String name, String email, String password ,int BirthYear,Gender gender, UserRole role){
+        this.name = name;
+        this.birthYear = BirthYear;
+        this.email = email;
+        this.password = password;
+        this.notifications = new ArrayList<>();
+        this.friendships = new ArrayList<>();
+        setRole(role);
+        setGender(gender);
     }
     public void UpdateProfile(String NewName, String NewEmail, int NewBirthYear){
         this.name = NewName;
@@ -32,6 +42,18 @@ public class User {
     public String getName(){
         return this.name;
     }
+    public void setName(String name){
+        this.name = name;
+    }
+    public void setEmail(String Email){
+        this.email = Email;
+    }
+    public void setBirthYear(int Year){
+        this.birthYear = Year;
+    }
+    public void setPassword(String Pass){
+        this.password = Pass;
+    }
     public String getPassword(){
 
         return this.password;
@@ -39,6 +61,7 @@ public class User {
     private void setRole(UserRole role) {
         this.role = role;
     }
+    private void setGender(Gender gender) {this.gender = gender;}
     public void ResetPassword(String NewPassword){
         this.password = NewPassword;
     }
