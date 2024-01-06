@@ -6,7 +6,7 @@ public class Editor extends User {
     private List<Movie> suggestedEdits;
 
     public Editor(String name, String email, String password ,int BirthYear, Gender gender) {
-        SetUser(name, email, password,BirthYear, gender,UserRole.EDITOR);
+        super(name, email, password,BirthYear, gender, UserRole.EDITOR);
         this.suggestedEdits = new ArrayList<>();
     }
 

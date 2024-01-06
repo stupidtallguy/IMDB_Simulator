@@ -14,6 +14,7 @@ class   Movie {
     List<Person> Actors;
     LocalDate releaseDate;
     List<String> Trivia;
+    boolean InappropriateContent = false;
     private List<EditSuggestionEntry> editSuggestions;
 
     public Movie(String title, String plotSummary, String posterUrl) {
@@ -144,10 +145,9 @@ class   Movie {
     private boolean containsNewPlotSummary(String editDetails) {
         return this.plotSummary.equals(editDetails);
     }
-    
+
 
     private boolean containsReleaseDate(String editDetails) {
-        // Example: Placeholder method to check if the edit details contain release date information
         return editDetails.contains("Release Date:");
     }
 
@@ -164,5 +164,14 @@ class   Movie {
 
     public void clearEditSuggestions() {
         editSuggestions.clear();
+    }
+
+    public void suggestEdit(Editor editor, String editDetails) {
+        EditSuggestionEntry editSuggestion = new EditSuggestionEntry(editor, editDetails);
+        this.editSuggestions.add(editSuggestion);
+    }
+
+    public void flagInappropriateContent(Editor editor) {
+        this.InappropriateContent = true;
     }
 }

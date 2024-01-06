@@ -7,7 +7,7 @@ class Member extends User {
     List<Movie> classicsToSee;
 
     public Member(String name, String email, String password , int BirthYear, Gender gender) {
-        SetUser(name, email, password ,birthYear,gender,UserRole.MEMBER );
+        super(name, email, password ,BirthYear,gender,UserRole.MEMBER );
         this.watchlist = new ArrayList<>();
         this.favorites = new ArrayList<>();
         this.classicsToSee = new ArrayList<>();

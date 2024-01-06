@@ -58,7 +58,7 @@ class IMDbDatabase {
     }
 
     public void editMovie(Movie movie) {
-        // Implement logic to edit an existing movie
+        //logics to edit an existing movie
     }
 
     public void deleteMovie(Movie movie) {
@@ -71,7 +71,7 @@ class IMDbDatabase {
     }
 
     public void editPerson(Person person) {
-        // Implement logic to edit an existing person
+        //logics to edit an existing person
     }
 
     public void deletePerson(Person person) {
@@ -83,16 +83,12 @@ class IMDbDatabase {
         if (user != null) {
             // Check if the user is not already banned
             if (!user.isBanned()) {
-                // Perform actions to ban the user
                 user.setBanned(user);  // Set the user's banned status to true
-                // Optionally, additional actions like revoking privileges, logging the ban, etc.
                 System.out.println(user.getName() + " has been banned.");
             } else {
-                // User is already banned
                 System.out.println(user.getName() + " is already banned.");
             }
         } else {
-            // Invalid user provided
             System.out.println("Invalid user.");
         }
     }

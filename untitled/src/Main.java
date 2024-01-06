@@ -383,7 +383,7 @@ public class Main {
 
                                         if (approvalDecision == 1) {
                                             // Approve edits
-                                            movieToReview.applyEdits();
+                                            movieToReview.applyEdits(editSuggestions);
                                             System.out.println("Edits approved and applied successfully!");
                                         } else if (approvalDecision == 2) {
                                             // Reject edits
@@ -514,10 +514,32 @@ public class Main {
 
             switch (editorAction) {
                 case 1:
-                    // Implement logic for suggesting edits
+                    // Suggest Edits
+                    System.out.println("Enter the title of the movie you want to suggest edits for:");
+                    String movieTitle = input.next();
+                    Movie movieToEdit = imdbDatabase.getMovieByTitle(movieTitle);
+
+                    if (movieToEdit != null) {
+                        System.out.println("Enter details for the suggested edits:");
+                        String editDetails = input.next();
+                        movieToEdit.suggestEdit(editor, editDetails);
+                        System.out.println("Edits suggested successfully!");
+                    } else {
+                        System.out.println("Movie not found.");
+                    }
                     break;
                 case 2:
-                    // Implement logic for flagging inappropriate content
+                    // Flag Inappropriate Content
+                    System.out.println("Enter the title of the movie with inappropriate content:");
+                    String inappropriateMovieTitle = input.next();
+                    Movie movieToFlag = imdbDatabase.getMovieByTitle(inappropriateMovieTitle);
+
+                    if (movieToFlag != null) {
+                        movieToFlag.flagInappropriateContent(editor);
+                        System.out.println("Content flagged successfully!");
+                    } else {
+                        System.out.println("Movie not found.");
+                    }
                     break;
                 case 3:
                     System.out.println("Goodbye!");

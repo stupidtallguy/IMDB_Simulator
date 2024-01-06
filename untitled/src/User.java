@@ -14,15 +14,8 @@ public class User {
     int birthYear;
     Gender gender;
 
-    public User(String name, String email, String password ,int BirthYear,Gender gender, UserRole role){
-        this.name = name;
-        this.birthYear = BirthYear;
-        this.email = email;
-        this.password = password;
-        this.notifications = new ArrayList<>();
-        this.friendships = new ArrayList<>();
-        setRole(role);
-        setGender(gender);
+    public User(String name, String email, String password ,int BirthYear,Gender gender, UserRole role) {
+        SetUser(name,email,password ,BirthYear,gender,role);
     }
     public void SetUser(String name, String email, String password ,int BirthYear,Gender gender, UserRole role){
         this.name = name;
